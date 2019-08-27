@@ -45,5 +45,9 @@
 <script src="resources/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="resources/js/demo.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAoCreJSTSKMSraR3BTeIV8TBxoyI4OWA"></script>
+<script src="resources/js/gmaps.js"></script>
+<script src="resources/plugins/jquery-latitude-longitude-picker-gmaps/js/jquery-gmaps-latlon-picker.js"></script>
 </body>
 </html>

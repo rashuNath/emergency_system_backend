@@ -1,9 +1,23 @@
 <?php
 include_once ('views/includes/head.php');
 include_once ('vendor/autoload.php');
+use App\DataManipulation\DataManipulation;
 
-$dataManipulation = new \App\DataManipulation\DataManipulation();
-$availableHospital = $dataManipulation->viewAvailableHospital();
+$dataManipulation = new DataManipulation();
+
+if(isset($_POST['searchHospital'])){
+
+    $userLatitude = $_POST['latitude'];
+    $userLongitude = $_POST['longitude'];
+
+    $sortedHospital = $dataManipulation->viewAllHospital($userLatitude,$userLongitude);
+//    sort($distanceArray);
+//    echo "<pre>";
+//    var_dump($sortedHospital);
+//    echo "</pre>";
+
+
+}
 ?>
 
   <header class="main-header">
@@ -239,12 +253,13 @@ $availableHospital = $dataManipulation->viewAvailableHospital();
             </div>
 
             <?php
-            if($availableHospital !=FALSE){
-                foreach ($availableHospital as $hospital){
+            if($sortedHospital !=FALSE){
+                foreach ($sortedHospital as $hospital){
                     $hospitalName = $hospital->hospital_name;
-                    $location = $hospital->location;
+                    $location = $hospital->address;
                     $freeBed = $hospital->empty_bed;
                     $freeIcu = $hospital->empty_icu;
+                    $distance = $hospital->distance;
                     ?>
                     <div class="box">
                         <div class="box-body">
@@ -278,9 +293,11 @@ $availableHospital = $dataManipulation->viewAvailableHospital();
                                         ?>
                                     </p>
 
+                                    <h4><strong>It's <?php echo round($distance,1)?> Km. away from your location.</strong></h4>
+
                                 </div>
                                 <div class="right-flex">
-                                    <button class="btn btn-default">Send Request</button>
+<!--                                    <button class="btn btn-default">Send Request</button>-->
                                 </div>
                             </div>
                         </div>
@@ -303,91 +320,4 @@ $availableHospital = $dataManipulation->viewAvailableHospital();
 
 <?php
 include_once ('views/includes/foot.php');
-
-//getting distance by php
-function distance($lat1, $lon1, $lat2, $lon2) {
-
-    $pi80 = M_PI / 180;
-    $lat1 *= $pi80;
-    $lon1 *= $pi80;
-    $lat2 *= $pi80;
-    $lon2 *= $pi80;
-
-    $r = 6372.797; // mean radius of Earth in km
-    $dlat = $lat2 - $lat1;
-    $dlon = $lon2 - $lon1;
-    $a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1) * cos($lat2) * sin($dlon / 2) * sin($dlon / 2);
-    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-    $km = $r * $c;
-
-    //echo '<br/>'.$km;
-    return $km;
-}
-$distance = distance(22.3307998,91.8412863,22.3307996,91.8412865);
-echo "distance=".$distance;
-//getting distance by php end
 ?>
-
-<script>
-    console.log('script working');
-    console.log($.fn.jquery);
-
-
-    //getting distance by javascript
-    function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
-        var R = 6371; // Radius of the earth in km
-        var dLat = deg2rad(lat2-lat1);  // deg2rad below
-        var dLon = deg2rad(lon2-lon1);
-        var a =
-            Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-            Math.sin(dLon/2) * Math.sin(dLon/2)
-        ;
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        var d = R * c; // Distance in km
-        return d;
-    }
-
-    function deg2rad(deg) {
-        return deg * (Math.PI/180)
-    }
-    var distance = getDistanceFromLatLonInKm(22.3307998,91.8412863,23.7593572,90.3788136);
-    console.log('distance'+distance);
-    //getting distance by javascript end
-
-
-
-    var addressFromLatLong = "https://maps.googleapis.com/maps/api/geocode/json?latlng=23.1793157,91.9881527&key=AIzaSyAAoCreJSTSKMSraR3BTeIV8TBxoyI4OWA";
-    console.log(addressFromLatLong);
-
-
-    function getAddress (latitude, longitude) {
-//        $.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=.9881527&key=AIzaSyAAoCreJSTSKMSraR3BTeIV8TBxoyI4OWA')
-        $.ajax('https://maps.googleapis.com/maps/api/geocode/json?' + 'latlng=' + latitude + ',' + longitude + '&key=' + 'AIzaSyAAoCreJSTSKMSraR3BTeIV8TBxoyI4OWA')
-            .then(
-            function success (response) {
-                console.log('User\'s Address Data is ', response)
-            },
-            function fail (status) {
-                console.log('Request failed.  Returned status of',
-                    status)
-            }
-        )
-    }
-
-    if("geolocation" in navigator){
-        console.log('geolocation found');
-        navigator.geolocation.getCurrentPosition(function(position) {
-            console.log(position.coords.latitude);
-            console.log(position.coords.longitude);
-            console.log(position.coords.accuracy);
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            getAddress(latitude, longitude)
-
-        });
-    }
-
-
-
-</script>

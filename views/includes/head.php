@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="resources/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="resources/plugins/Ionicons/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="resources/plugins/jquery-latitude-longitude-picker-gmaps/css/jquery-gmaps-latlon-picker.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="resources/css/style.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins

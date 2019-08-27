@@ -1,6 +1,9 @@
 <?php
+include_once ('views/includes/head.php');
 include_once ('vendor/autoload.php');
-include_once ('views')
+
+$dataManipulation = new \App\DataManipulation\DataManipulation();
+$availableHospital = $dataManipulation->viewAvailableHospital();
 ?>
 
   <header class="main-header">
@@ -231,100 +234,62 @@ include_once ('views')
 
         <div class="col-xs-12">
 
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
+            <div>
+                My location:
             </div>
-          </div>
-          <!-- /.box -->
 
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name Two</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
+            <?php
+            if($availableHospital !=FALSE){
+                foreach ($availableHospital as $hospital){
+                    $hospitalName = $hospital->hospital_name;
+                    $location = $hospital->location;
+                    $freeBed = $hospital->empty_bed;
+                    $freeIcu = $hospital->empty_icu;
+                    ?>
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="left-flex">
+                                    <h4><?php echo $hospitalName ?></h4>
+                                    <h5><span><strong>Location:</strong></span> <?php echo $location ?></h5>
+                                    <p>
+                                    <?php
+                                        if($freeBed==0){
+                                            ?>
+                                            <del><span><strong>Free Bed</strong></span>: <?php echo $freeBed ?></del>
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <span><strong>Free Bed</strong></span>: <?php echo $freeBed ?>
+                                            <?php
+                                        }
+                                    ?>
 
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name Two</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
+                                        <?php
+                                        if($freeIcu==0){
+                                            ?>
+                                            <del><span><strong>Free ICU</strong></span>: <?php echo $freeIcu ?></del>
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <span><strong>Free ICU</strong></span>: <?php echo $freeIcu ?>
+                                            <?php
+                                        }
+                                        ?>
+                                    </p>
 
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
-
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name Two</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
+                                </div>
+                                <div class="right-flex">
+                                    <button class="btn btn-default">Send Request</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+            <?php
+                }
+            }
+            ?>
 
         </div>
       </div>
@@ -335,52 +300,108 @@ include_once ('views')
   </div>
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2019 <a href="javascript:;">Emergency Service</a>.</strong> All rights
-    reserved.
-  </footer>
-</div>
-<!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src="plugins/jquery/dist/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<?php
+include_once ('views/includes/foot.php');
+
+
+?>
+
 <script>
-  $.widget.bridge('uibutton', $.ui.button);
+    console.log('script working');
+    console.log($.fn.jquery);
+
+
+    //getting distance by javascript
+    function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lon2-lon1);
+        var a =
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon/2) * Math.sin(dLon/2)
+        ;
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c; // Distance in km
+        return d;
+    }
+
+    function deg2rad(deg) {
+        return deg * (Math.PI/180)
+    }
+    var distance = getDistanceFromLatLonInKm(22.3307998,91.8412863,23.7593572,90.3788136);
+    console.log('distance'+distance);
+    //getting distance by javascript end
+
+
+
+    var addressFromLatLong = "https://maps.googleapis.com/maps/api/geocode/json?latlng=23.1793157,91.9881527&key=AIzaSyAAoCreJSTSKMSraR3BTeIV8TBxoyI4OWA";
+    console.log(addressFromLatLong);
+
+//    var myLatitude=null,
+//        myLongitude=null;
+
+
+    function getAddress (latitude, longitude) {
+//        $.ajax('https://maps.googleapis.com/maps/api/geocode/json?latlng=.9881527&key=AIzaSyAAoCreJSTSKMSraR3BTeIV8TBxoyI4OWA')
+        $.ajax('https://maps.googleapis.com/maps/api/geocode/json?' + 'latlng=' + latitude + ',' + longitude + '&key=' + 'AIzaSyAAoCreJSTSKMSraR3BTeIV8TBxoyI4OWA')
+            .then(
+            function success (response) {
+                console.log('User\'s Address Data is ', response)
+            },
+            function fail (status) {
+                console.log('Request failed.  Returned status of',
+                    status)
+            }
+        )
+    }
+
+    if("geolocation" in navigator){
+        console.log('geolocation found');
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log(position.coords.latitude);
+            console.log(position.coords.longitude);
+            console.log(position.coords.accuracy);
+             var myLatitude = position.coords.latitude;
+             var myLongitude = position.coords.longitude;
+            <?php
+            echo "$(document.body).append(myLatitude);";
+            $distance = distance(22.3307998,91.8412863,22.330996,91.8412865);
+            echo "distance".$distance;
+            ?>
+
+        });
+    }
+
+
+
+
 </script>
-<!-- Bootstrap 3.3.7 -->
-<script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="plugins/raphael/raphael.min.js"></script>
-<script src="plugins/morris.js/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="plugins/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="plugins/jquery-knob/dist/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="plugins/moment/min/moment.min.js"></script>
-<script src="plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="contents/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="contents/js/pages/dashboard.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="contents/js/demo.js"></script>
-</body>
-</html>
+
+<?php
+//getting distance by php
+//$myLatitude = "<script>$(document.body).append(myLatitude)</script>";
+//echo "the distance".$myLatitude;
+function distance($lat1, $lon1, $lat2, $lon2) {
+
+    $pi80 = M_PI / 180;
+    $lat1 *= $pi80;
+    $lon1 *= $pi80;
+    $lat2 *= $pi80;
+    $lon2 *= $pi80;
+
+    $r = 6372.797; // mean radius of Earth in km
+    $dlat = $lat2 - $lat1;
+    $dlon = $lon2 - $lon1;
+    $a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1) * cos($lat2) * sin($dlon / 2) * sin($dlon / 2);
+    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+    $km = $r * $c;
+
+    //echo '<br/>'.$km;
+    return $km;
+}
+$distance = distance(22.3307998,91.8412863,22.3307996,91.8412865);
+//echo "distance=".$distance;
+//getting distance by php end
+?>
