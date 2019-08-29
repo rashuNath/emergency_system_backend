@@ -1,9 +1,23 @@
 <?php
-include_once ('includes/head.php');
-include_once ('../vendor/autoload.php');
+include_once ('views/includes/head.php');
+include_once ('vendor/autoload.php');
+use App\DataManipulation\DataManipulation;
 
-$dataManipulation = new \App\DataManipulation\DataManipulation();
-$availableHospital = $dataManipulation->viewAvailableHospital();
+$dataManipulation = new DataManipulation();
+
+if(isset($_POST['searchHospital'])){
+
+    $userLatitude = $_POST['latitude'];
+    $userLongitude = $_POST['longitude'];
+
+    $sortedHospital = $dataManipulation->viewAllHospital($userLatitude,$userLongitude);
+//    sort($distanceArray);
+//    echo "<pre>";
+//    var_dump($sortedHospital);
+//    echo "</pre>";
+
+
+}
 ?>
 
   <header class="main-header">
@@ -234,22 +248,56 @@ $availableHospital = $dataManipulation->viewAvailableHospital();
 
         <div class="col-xs-12">
 
-            <?php
-            if($availableHospital !=FALSE){
+            <div>
+                My location:
+            </div>
 
-                foreach ($availableHospital as $hospital){
+            <?php
+            if($sortedHospital !=FALSE){
+                foreach ($sortedHospital as $hospital){
                     $hospitalName = $hospital->hospital_name;
+                    $location = $hospital->address;
+                    $freeBed = $hospital->empty_bed;
+                    $freeIcu = $hospital->empty_icu;
+                    $distance = $hospital->distance;
                     ?>
                     <div class="box">
                         <div class="box-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="left-flex">
                                     <h4><?php echo $hospitalName ?></h4>
-                                    <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                                    <p>Free Bed: Available</p>
+                                    <h5><span><strong>Location:</strong></span> <?php echo $location ?></h5>
+                                    <p>
+                                    <?php
+                                        if($freeBed==0){
+                                            ?>
+                                            <del><span><strong>Free Bed</strong></span>: <?php echo $freeBed ?></del>
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <span><strong>Free Bed</strong></span>: <?php echo $freeBed ?>
+                                            <?php
+                                        }
+                                    ?>
+
+                                        <?php
+                                        if($freeIcu==0){
+                                            ?>
+                                            <del><span><strong>Free ICU</strong></span>: <?php echo $freeIcu ?></del>
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <span><strong>Free ICU</strong></span>: <?php echo $freeIcu ?>
+                                            <?php
+                                        }
+                                        ?>
+                                    </p>
+
+                                    <h4><strong>It's <?php echo round($distance,1)?> Km. away from your location.</strong></h4>
+
                                 </div>
                                 <div class="right-flex">
-                                    <button class="btn btn-default">Send Request</button>
+<!--                                    <button class="btn btn-default">Send Request</button>-->
                                 </div>
                             </div>
                         </div>
@@ -260,101 +308,6 @@ $availableHospital = $dataManipulation->viewAvailableHospital();
             }
             ?>
 
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
-
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name Two</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
-
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name Two</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
-
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
-
-          <div class="box">
-            <div class="box-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="left-flex">
-                  <h4>Hospital Name Two</h4>
-                  <h5><span>Location:</span> Pachlaish, Chittagong</h5>
-                  <p>Free Bed: Available</p>
-                </div>
-                <div class="right-flex">
-                  <button class="btn btn-default">Send Request</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.box -->
-
         </div>
       </div>
       <!-- /.row (main row) -->
@@ -364,52 +317,7 @@ $availableHospital = $dataManipulation->viewAvailableHospital();
   </div>
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2019 <a href="javascript:;">Emergency Service</a>.</strong> All rights
-    reserved.
-  </footer>
-</div>
-<!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-<script src="plugins/jquery/dist/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap 3.3.7 -->
-<script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="plugins/raphael/raphael.min.js"></script>
-<script src="plugins/morris.js/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="plugins/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="plugins/jquery-knob/dist/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="plugins/moment/min/moment.min.js"></script>
-<script src="plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="contents/js/adminlte.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="contents/js/pages/dashboard.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="contents/js/demo.js"></script>
-</body>
-</html>
+<?php
+include_once ('views/includes/foot.php');
+?>

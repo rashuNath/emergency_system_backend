@@ -1,3 +1,12 @@
+
+<?php
+$ressourceRoot = dirname($_SERVER['PHP_SELF']);
+$ressourceRoot = explode('/',$ressourceRoot);
+
+$ressourceRoot = $ressourceRoot[1];
+//echo $ressourceRoot;
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,28 +16,28 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="resources/plugins/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="resources/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="resources/plugins/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/Ionicons/css/ionicons.min.css">
 
-    <link rel="stylesheet" href="resources/plugins/jquery-latitude-longitude-picker-gmaps/css/jquery-gmaps-latlon-picker.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/jquery-latitude-longitude-picker-gmaps/css/jquery-gmaps-latlon-picker.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/css/style.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="resources/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/css/skins/_all-skins.min.css">
     <!-- Morris chart -->
-    <link rel="stylesheet" href="resources/plugins/morris.js/morris.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/morris.js/morris.css">
     <!-- jvectormap -->
-    <link rel="stylesheet" href="resources/plugins/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/jvectormap/jquery-jvectormap.css">
     <!-- Date Picker -->
-    <link rel="stylesheet" href="resources/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="resources/plugins/bootstrap-daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/bootstrap-daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link rel="stylesheet" href="/<?php echo $ressourceRoot?>/resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

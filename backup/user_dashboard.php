@@ -104,7 +104,7 @@ include_once ('vendor/autoload.php');
 
         <div class="box">
             <div class="box-body">
-                <form action="hospital_emergency.php" method="post">
+                <form action="backup/hospital_emergency.php" method="post">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
